@@ -1,26 +1,30 @@
 {% extends "../base.html" %} {% block content %}
 <div class="flex flex-wrap flex-row justify-between items-center mb-8">
-	<div class="text-3xl font-bold text-center">ToDo Manager - SIGNUP</div>
+	<div class="text-3xl font-bold text-center">Arike - USER SIGNUP</div>
 </div>
 
+{% csrf_token %}
 <form action="" method="post">
 	<div class="flex justify-center flex-col w-full text-base">
+		{% for field in form %}
 		<div class="fieldWrapper">
-			{{ UserCreateForm.full_name }}
-            {{form.email}}
-            {{form.phone}}
-            {{form.is_verified}}
-            {{form.role}}
-            {{form.password}}
-			<div class="text-xs text-red-600 py-1 mb-2">{{ form.confirm_password.errors }}</div>
+			{% if field.field.widget.input_type == 'checkbox' %}
+			{{ field }}
+			{{ field.label_tag }}
+			{% else %}
+			{{ field.label_tag }}
+			{{ field }}
+			{% endif %}
+			<span class="form-error">{{ field.errors.as_text }}</span>
 		</div>
-		{% csrf_token %}
+		{% endfor %}
+
 		<button
-			class="bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md font-base text-center mt-2 w-full"
-		>
+			class="bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md font-base text-center mt-2 w-full">
 			Signup
 		</button>
-		<i class="mt-2 text-base text-center text-gray-600 py-1">Already Registered? <a class="text-red-600" href="/user/login/">Login</a></i>
+		<i class="mt-2 text-base text-center text-gray-600 py-1">Already Registered? <a class="text-red-600"
+				href="/user/login/">Login</a></i>
 	</div>
 </form>
 {% endblock content %}
