@@ -8,6 +8,12 @@ TYPES_OF_USERS = (
     ("district_admin", "district_admin")
 )
 
+class MyUser(AbstractUser):
+    full_name = models.CharField(max_length=50)
+    role = models.CharField(max_length=100, choices=TYPES_OF_USERS, default=TYPES_OF_USERS[0][0])
+    phone = models.CharField(max_length=14)
+    is_verified = models.BooleanField("Is Verified?", default=False)
+        
 DISTRICT_CHOICES = [
     (1, "Thiruvananthapuram"),
     (2, "Kollam"),
@@ -87,13 +93,7 @@ class Ward(models.Model):
     local_body = models.ForeignKey(LocalBody, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
     number = models.IntegerField()
-
-    class Meta:
-        unique_together = (
-            "local_body",
-            "name",
-            "number",
-        )
+    user = models.ManyToManyField(MyUser)
 
     def __str__(self):
         return f"{self.name}"
@@ -110,18 +110,7 @@ class Facility(models.Model):
     pincode = models.CharField(max_length=15)
     phone = models.CharField(max_length=14)
     ward = models.ForeignKey(Ward, on_delete=models.PROTECT)
-
-class MyUser(AbstractUser):
-    full_name = models.CharField(max_length=50)
-    role = models.CharField(max_length=100, choices=TYPES_OF_USERS, default=TYPES_OF_USERS[0][0])
-    phone = models.CharField(max_length=14)
-    is_verified = models.BooleanField("Is Verified?", default=False)
-
-    ward = models.ForeignKey(Ward, on_delete=models.PROTECT)
-    facility = models.ForeignKey(Facility, on_delete=models.PROTECT)
-    
-    def __str__(self):
-        return self.user.username
+    user = models.ManyToManyField(MyUser)
 
 class Patient(models.Model):
     full_name = models.CharField(max_length=50)

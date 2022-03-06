@@ -3,7 +3,6 @@
 	<div class="text-3xl font-bold text-center">Arike - USER SIGNUP</div>
 </div>
 
-{% csrf_token %}
 <form action="" method="post">
 	<div class="flex justify-center flex-col w-full text-base">
 		{% for field in form %}
@@ -18,13 +17,14 @@
 			<span class="form-error">{{ field.errors.as_text }}</span>
 		</div>
 		{% endfor %}
-
+		
+		{% csrf_token %}
 		<button
 			class="bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md font-base text-center mt-2 w-full">
 			Signup
 		</button>
 		<i class="mt-2 text-base text-center text-gray-600 py-1">Already Registered? <a class="text-red-600"
-				href="/user/login/">Login</a></i>
+				href="/login/">Login</a></i>
 	</div>
 </form>
 {% endblock content %}
