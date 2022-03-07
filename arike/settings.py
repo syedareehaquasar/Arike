@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'arike.wsgi.application'
 
 DATABASES = {
     'default': {
-        "ENGINE": "django.db.backends.psycopg2_postgresql", 
+        "ENGINE": "django.db.backends.postgresql_psycopg2", 
         'NAME': "ddut463mnho699",
         'USER': "efhomkdzrcmdhn",
         'PASSWORD': "8328af0203446de39de23038822cb71469f35bbfc79e21c1c29cf952a9458d6d",
