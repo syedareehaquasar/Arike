@@ -1,17 +1,26 @@
 {% extends "pannel.html" %}
-
 {% block right %}
-<div class="flex flex-col w-full md:space-y-4">
+<h1 class="text-8xl align-text-bottom">Facilities</h1>
+<br>
 {% for f in facility %}
-<li>{{f.kind}}</li>
-<li>{{f.name}}</li>
-<li>{{f.address}}</li>
-<li>{{f.pincode}}</li>
-<li>{{f.phone}}</li>
-<li>{{f.ward}}</li>
-<li>{{f.deleted}}</li>
-{% empty %}
-    <li>No Facilities yet.</li>
-{% endfor %}
+<div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative rounded-lg m-4">
+    <li class="list-none">
+        <div class="flex flex-wrap flex-row justify-between">
+            <div>
+                <div class="font-semibold text-lg text-purple-200">{{f.name}}</div>
+                <div>Ward: {{f.ward}}</div>
+            </div>
+            <span
+                class="px-2 h-5 text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">{{f.kind}}</span>
+        </div>
+        <ul>
+            <li>Address: {{f.address}}</li>
+            <li>Pincode: {{f.pincode}}</li>
+            <li>Phone Number: {{f.phone}}</li>
+        </ul>
+    </li>
 </div>
+{% empty %}
+<li>No Facilities yet.</li>
+{% endfor %}
 {% endblock right %}
