@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.AddField(
-            model_name='myuser',
+            model_name='UserProfile',
             name='ward',
             field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.PROTECT, to='management.ward'),
             preserve_default=False,
@@ -79,7 +79,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.AddField(
-            model_name='myuser',
+            model_name='UserProfile',
             name='facility',
             field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.PROTECT, to='management.facility'),
             preserve_default=False,

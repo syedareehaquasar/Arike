@@ -16,11 +16,11 @@ class Migration(migrations.Migration):
             unique_together=set(),
         ),
         migrations.RemoveField(
-            model_name='myuser',
+            model_name='UserProfile',
             name='facility',
         ),
         migrations.RemoveField(
-            model_name='myuser',
+            model_name='UserProfile',
             name='ward',
         ),
         migrations.AddField(

@@ -4,10 +4,10 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import ListView, TemplateView
 
 from .forms import MyUserCreationForm, CustomAuthenticationForm
-from management.models import MyUser
+from management.models import UserProfile
 
 class UserCreateView(CreateView):
-    model = MyUser
+    model = UserProfile
     form_class = MyUserCreationForm
     template_name = "user/signup.html"
     success_url = "/login"

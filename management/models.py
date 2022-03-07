@@ -1,179 +1,183 @@
 from django.db import models
-
-from django.contrib.auth.models import AbstractUser
-
-TYPES_OF_USERS = (
-    ("primary_nurse", "primary_nurse"),
-    ("secondary_nurse", "secondary_nurse"),
-    ("district_admin", "district_admin")
-)
-
-class MyUser(AbstractUser):
-    full_name = models.CharField(max_length=50)
-    role = models.CharField(max_length=100, choices=TYPES_OF_USERS, default=TYPES_OF_USERS[0][0])
-    phone = models.CharField(max_length=14)
-    is_verified = models.BooleanField("Is Verified?", default=False)
-        
-DISTRICT_CHOICES = [
-    (1, "Thiruvananthapuram"),
-    (2, "Kollam"),
-    (3, "Pathanamthitta"),
-    (4, "Alappuzha"),
-    (5, "Kottayam"),
-    (6, "Idukki"),
-    (7, "Ernakulam"),
-    (8, "Thrissur"),
-    (9, "Palakkad"),
-    (10, "Malappuram"),
-    (11, "Kozhikode"),
-    (12, "Wayanad"),
-    (13, "Kannur"),
-    (14, "Kasargode"),
-]
-
-
-class State(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return f"{self.name}"
-
-
-class District(models.Model):
-    state = models.ForeignKey(State, on_delete=models.PROTECT)
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return f"{self.name}"
-
-
-LOCAL_BODY_CHOICES = (
-    # Panchayath levels
-    (1, "Grama Panchayath"),
-    (2, "Block Panchayath"),
-    (3, "District Panchayath"),
-    (4, "Nagar Panchayath"),
-    # Municipality levels
-    (10, "Municipality"),
-    # Corporation levels
-    (20, "Corporation"),
-    # Unknown
-    (50, "Others"),
-)
-
-def reverse_lower_choices(choices):
-    output = {}
-    for choice in choices:
-        output[choice[1].lower()] = choice[0]
-    return output
-
-
-REVERSE_LOCAL_BODY_CHOICES = reverse_lower_choices(LOCAL_BODY_CHOICES)
-
-
-class LocalBody(models.Model):
-    district = models.ForeignKey(District, on_delete=models.PROTECT)
-
-    name = models.CharField(max_length=255)
-    body_type = models.IntegerField(choices=LOCAL_BODY_CHOICES)
-    localbody_code = models.CharField(max_length=20, blank=True, null=True)
-
+from django.contrib.auth.models import User
+# Create your models here.
+class TimeStampMixin(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     class Meta:
-        unique_together = (
-            "district",
-            "body_type",
-            "name",
-        )
-
-    def __str__(self):
-        return f"{self.name} ({self.body_type})"
-
-
-class Ward(models.Model):
-    local_body = models.ForeignKey(LocalBody, on_delete=models.PROTECT)
-    name = models.CharField(max_length=255)
-    number = models.IntegerField()
-    user = models.ManyToManyField(MyUser)
-
+        abstract = True
+class State(TimeStampMixin):
+    name = models.CharField(max_length=100)
     def __str__(self):
         return f"{self.name}"
-
-
-PHCorCHC = (
-    ("PHC", "PHC"),
-    ("CHC", "CHC")
-)
-class Facility(models.Model):
-    kind = models.CharField(max_length=100, choices=PHCorCHC, default=TYPES_OF_USERS[0][0])
+class District(TimeStampMixin):
     name = models.CharField(max_length=100)
+    state = models.ForeignKey(State, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.name}"
+class lsg_body(TimeStampMixin):
+    LOCAL_BODY_CHOICES = (
+        # Panchayath levels
+        (1, "Grama Panchayath"),
+        (2, "Block Panchayath"),
+        (3, "District Panchayath"),
+        (4, "Nagar Panchayath"),
+        # Municipality levels
+        (10, "Municipality"),
+        # Corporation levels
+        (20, "Corporation"),
+        # Unknown
+        (50, "Others"),
+    )
+    name = models.CharField(max_length=255)
+    kind = models.IntegerField(choices=LOCAL_BODY_CHOICES)
+    lsg_body_code = models.CharField(max_length=20, blank=True, null=True)
+    district = models.ForeignKey(District, on_delete=models.CASCADE, blank=True, null=True)
+    def __str__(self):
+        return f"{self.name} ({self.kind})"
+class Ward(TimeStampMixin):
+    name = models.CharField(max_length=255)
+    number = models.CharField(max_length=30)
+    lsg = models.ForeignKey(lsg_body, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.name}"
+class Facility(TimeStampMixin):
+    FACILITY_CHOICES = (
+        ("PHC", "PHC"),
+        ("CHC", "CHC"),
+    )
+    kind = models.CharField(max_length=100, choices=FACILITY_CHOICES)
+    name = models.CharField(max_length=255)
     address = models.TextField()
-    pincode = models.CharField(max_length=15)
-    phone = models.CharField(max_length=14)
-    ward = models.ForeignKey(Ward, on_delete=models.PROTECT)
-    user = models.ManyToManyField(MyUser)
-
-class Patient(models.Model):
-    full_name = models.CharField(max_length=50)
-    dob = models.DateField()
+    pincode = models.CharField(max_length=30)
+    phone = models.CharField(max_length=30)
+    ward = models.ForeignKey(Ward, on_delete=models.CASCADE)
+    deleted = models.BooleanField(default=False)
+    def __str__(self):
+        return f"{self.name}"
+class UserProfile(TimeStampMixin):
+    ROLE_CHOICES = (
+        ("primary_nurse", "primary_nurse"),
+        ("secondary_nurse", "secondary_nurse"),
+        ("district_admin", "district_admin"),
+    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.CharField(max_length=100, choices=ROLE_CHOICES)
+    phone = models.CharField(max_length=30)
+    is_verified = models.BooleanField(default=False)
+    deleted = models.BooleanField(default=False)
+    facility = models.ForeignKey(
+        Facility, on_delete=models.CASCADE, blank=True, null=True)
+    district = models.ForeignKey(
+        District, on_delete=models.CASCADE, blank=True, null=True)
+    def __str__(self):
+        return f"{self.user.username}"
+class Patient(TimeStampMixin):
+    GENDER_CHOICES = (
+        ("male", "male"),
+        ("female", "female"),
+        ("other", "other"),
+    )
+    full_name = models.CharField(max_length=255)
+    date_of_birth = models.DateField()
     address = models.TextField()
-    landmark = models.CharField(max_length=15)
-    phone = models.CharField(max_length=14)
-    gender = models.CharField(max_length=15)
-    emergency_phone_number = models.CharField(max_length=14)
-    expired_time = models.DateTimeField(default=None)
-    ward = models.ForeignKey(Ward, on_delete=models.PROTECT)
-    facility = models.ForeignKey(Facility, on_delete=models.PROTECT)
-
-RELATIONS = (
-    ("Mother", "Mother"),
-    ("Father", "Father"),
-    ("Sibling", "Sibling"),
-    ("Spouse", "Spouse"),
-    ("Guardian", "Guardian"),
-    ("Friend", "Friend"),
-    ("Grand Parents", "Grand Parents"),
-    ("Not Related", "Not Related"),
-)
-class FamilyDetails(models.Model):
-    full_name = models.CharField(max_length=50)
-    phone = models.CharField(max_length=14)
-    dob = models.DateField()
-    email = models.EmailField()
-    relation = models.CharField(max_length=100, choices=RELATIONS, default=TYPES_OF_USERS[0][0])
+    landmark = models.TextField()
+    phone = models.CharField(max_length=30)
+    gender = models.CharField(max_length=100, choices=GENDER_CHOICES)
+    emergency_phone_number = models.CharField(max_length=30)
+    expired_time = models.DateTimeField(blank=True, null=True)
+    ward = models.ForeignKey(Ward, on_delete=models.CASCADE)
+    facility = models.ForeignKey(
+        Facility, on_delete=models.CASCADE, blank=True, null=True)
+    deleted = models.BooleanField(default=False)
+    def __str__(self):
+        return f"{self.full_name}"
+class Family_Detail(TimeStampMixin):
+    RELATION_CHOICES = (
+        ("MOTHER", "MOTHER"),
+        ("FATHER", "FATHER"),
+        ("SON", "SON"),
+        ("DAUGHTER", "DAUGHTER"),
+        ("BROTHER", "BROTHER"),
+        ("SISTER", "SISTER"),
+        ("WIFE", "WIFE"),
+        ("HUSBAND", "HUSBAND"),
+        ("OTHER", "OTHER")
+    )
+    full_name = models.CharField(max_length=255)
+    phone = models.CharField(max_length=30)
+    date_of_birth = models.DateField()
+    email = models.EmailField(max_length=254)
+    relation = models.CharField(max_length=100, choices=RELATION_CHOICES)
     address = models.TextField()
-    education = models.CharField(max_length=100)
-    occupation = models.CharField(max_length=100)
+    education = models.CharField(max_length=255)
+    occupation = models.CharField(max_length=255)
     remarks = models.TextField()
     is_primary = models.BooleanField(default=False)
-    patient = models.ForeignKey(Patient, on_delete=models.PROTECT)
-
-DISEASES = (
-    ("DM", "D-32"),
-    ("Hypertension", "HT-58"),
-    ("IHD", "IDH-21"),
-    ("COPD", "DPOC-144"),
-    ("Dementia", "DM-62"),
-    ("CVA", "CAV-89"),
-    ("Cancer", "C-98"),
-    ("CKD", "DC-25"),
-)
-class Disease(models.Model):
-    disease = models.CharField(max_length=100, choices=DISEASES, default=TYPES_OF_USERS[0][0])
-
-class PatientDisease(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.PROTECT)
-    disease = models.ForeignKey(Disease, on_delete=models.PROTECT)
+    patient = models.ForeignKey(
+        Patient, on_delete=models.CASCADE, blank=True, null=True)
+    deleted = models.BooleanField(default=False)
+    def __str__(self):
+        return f"{self.full_name}"
+class Disease(TimeStampMixin):
+    name = models.CharField(max_length=255, null=True, blank=True)
+    icds_code = models.CharField(max_length=255)
+    def __str__(self):
+        return f"{self.name}"
+class Treatment(TimeStampMixin):
+    CARETYPE_CHOICES = (
+        ("General_care", "General_care"),
+        ("Genito_urinary_care", "Genito_urinary_care")
+    )
+    description = models.TextField()
+    care_type = models.CharField(max_length=255, choices=CARETYPE_CHOICES)
+    care_sub_type = models.CharField(max_length=255)
+    patient = models.ForeignKey(
+        Patient, on_delete=models.CASCADE, blank=True, null=True)
+    nurse = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True)
+    deleted = models.BooleanField(default=False)
+    def __str__(self):
+        return f"{self.care_type}"
+class Patient_Disease(TimeStampMixin):
+    patient = models.ForeignKey(
+        Patient, on_delete=models.CASCADE, blank=True, null=True)
+    disease = models.ForeignKey(
+        Disease, on_delete=models.CASCADE, blank=True, null=True)
+    treatment = models.ForeignKey(
+        Treatment, on_delete=models.CASCADE, blank=True, null=True)
     note = models.TextField()
-
-class VisitSchedule:
-    pass
-
-class VisitDetails:
-    pass
-
-class Treatment:
-    pass
-
-class TreatmentNotes:
-    pass
-
+    nurse = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True)
+    deleted = models.BooleanField(default=False)
+    def __str__(self):
+        return f"{self.disease}"
+class Schedule_Visit(TimeStampMixin):
+    date = models.DateField()
+    time = models.TimeField()
+    duration = models.IntegerField()
+    patient = models.ForeignKey(
+        Patient, on_delete=models.CASCADE, blank=True, null=True)
+    nurse = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True)
+    deleted = models.BooleanField(default=False)
+class Visit_Details(TimeStampMixin):
+    YESORNO_CHOICES = (
+        ("YES", "YES"),
+        ("NO", "NO")
+    )
+    palliative_phase = models.CharField(max_length=255)
+    blood_pressure = models.CharField(max_length=255)
+    pulse = models.CharField(max_length=255)
+    general_random_blood_sugar = models.CharField(max_length=255)
+    personal_hygiene = models.CharField(max_length=255)
+    mouth_hygiene = models.CharField(max_length=255)
+    pubic_hygiene = models.CharField(max_length=255)
+    systemic_examination = models.CharField(max_length=255)
+    patient_at_peace = models.CharField(
+        max_length=255, choices=YESORNO_CHOICES)
+    pain = models.CharField(max_length=255, choices=YESORNO_CHOICES)
+    symptoms = models.CharField(max_length=255)
+    note = models.CharField(max_length=255)
+    visit_schedule = models.ForeignKey(
+        Schedule_Visit, on_delete=models.CASCADE, null=True, blank=True)
