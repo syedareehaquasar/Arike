@@ -1,9 +1,7 @@
 {% extends "pannel.html" %}
 {% block right %}
-<h1 class="text-8xl align-text-bottom">Facilities</h1>
-<br>
 {% for f in facility %}
-<div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative rounded-lg m-4">
+<div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative rounded-lg m-4 flex-wrap">
     <li class="list-none">
         <div class="flex flex-wrap flex-row justify-between">
             <div>
@@ -24,3 +22,11 @@
 <li>No Facilities yet.</li>
 {% endfor %}
 {% endblock right %}
+{% block section %}
+<div class="shadow-lg px-4 py-6 w-200 bg-white dark:bg-gray-700 relative rounded-lg m-4">
+<h1 class="text-6xl">Facility</h1>
+<br>
+<a href="/facility/add/">
+    <span class="px-2 h-5 text-2xl font-semibold rounded-full bg-purple-100 text-green-800">Add</span>
+</a>
+</div>{% endblock section %}

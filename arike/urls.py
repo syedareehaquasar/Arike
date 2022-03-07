@@ -27,4 +27,6 @@ urlpatterns = [
     path("user/logout/", LogoutView.as_view()),
     path('facility/add/', facilityCreationView.as_view()),
     path("facility/", ListFacilities.as_view()),
+    path("patient/add/", addPatientView.as_view()),
+    path("patient/", ListPatients.as_view()),
 ]

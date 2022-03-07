@@ -81,7 +81,7 @@ class Patient(TimeStampMixin):
     full_name = models.CharField(max_length=255)
     date_of_birth = models.DateField()
     address = models.TextField()
-    landmark = models.TextField()
+    landmark = models.CharField(max_length=100)
     phone = models.CharField(max_length=30)
     gender = models.CharField(max_length=100, choices=GENDER_CHOICES)
     emergency_phone_number = models.CharField(max_length=30)

@@ -1,0 +1,37 @@
+{% extends "pannel.html" %}
+{% block right %}
+{% for p in patient %}
+<div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative rounded-lg m-4">
+    <li class="list-none">
+        <div class="flex flex-wrap flex-row justify-between">
+            <div>
+                <div class="font-semibold text-lg text-purple-200">{{p.full_name}}</div>
+                <div>DOB: {{p.date_of_birth}}</div>
+            </div>
+            <span
+                class="px-2 h-5 text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">{{p.gender}}</span>
+        </div>
+        <ul>
+            <li>Address: {{p.address}} \n Landmark: {{p.landmark}}</li>
+            <li>Phone: {{p.phone}}</li>
+            <li>Emergency Ph.no.: {{p.emergency_phone_number}}</li>
+            {% if p.expired_time != "null" %}
+            <li>Expired: {{p.expired_time}}</li>
+            {% endif %}
+            <li>Ward: {{p.ward}}</li>
+            <li>Facility: {{p.facility}}</li>
+        </ul>
+    </li>
+</div>
+{% empty %}
+<li>No Patients yet.</li>
+{% endfor %}
+{% endblock right %}
+{% block section %}
+<div class="shadow-lg px-4 py-6 w-200 bg-white dark:bg-gray-700 relative rounded-lg m-4">
+<h1 class="text-6xl">Patient</h1>
+<br>
+<a href="/patient/add/">
+    <span class="px-2 h-5 text-2xl font-semibold rounded-full bg-purple-100 text-green-800">Add</span>
+</a>
+</div>{% endblock section %}

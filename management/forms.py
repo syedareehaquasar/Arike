@@ -31,10 +31,10 @@ class FacilityCreationForm(forms.ModelForm):
         model = Facility
         fields = ("kind", "name", "address", "pincode", "phone", "ward", "deleted")
 
-# class AddPatientForm(UserCreationForm):
-#     class Meta(UserCreationForm):
-#         model = UserProfile
-#         fields = ("full_name", "email", "phone", "is_verified", "role")
+class AddPatientForm(forms.ModelForm):
+    class Meta(forms.ModelForm):
+        model = Patient
+        fields = ("full_name", "date_of_birth", "address", "landmark", "phone", "gender", "emergency_phone_number", "expired_time", "ward", "facility", "deleted")
 
 # class AddFamilyDetailsForm(UserCreationForm):
 #     class Meta(UserCreationForm):
