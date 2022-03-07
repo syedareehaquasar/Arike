@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-c*%%^i0ncbz^_am04x=@zn0$sekwqtb26l@poqffh26hne^wl)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'arike.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.db.backends.psycopg2_postgresql", 
+        'NAME': "ddut463mnho699",
+        'USER': "efhomkdzrcmdhn",
+        'PASSWORD': "8328af0203446de39de23038822cb71469f35bbfc79e21c1c29cf952a9458d6d",
+        'HOST': "ec2-54-204-99-176.compute-1.amazonaws.com", 
+        'PORT': 5432,
     }
 }
 
