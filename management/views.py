@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 from django.views.generic import ListView, TemplateView
 
 from .forms import MyUserCreationForm, CustomAuthenticationForm
@@ -21,6 +21,8 @@ class UserLoginView(LoginView):
 class Dashboard(TemplateView):
     template_name = "dashboard.html"
 
+class Pannel(TemplateView):
+    template_name = "pannel.html"
 
 class facilityCreationView(CreateView):
     pass
