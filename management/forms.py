@@ -26,10 +26,10 @@ class CustomAuthenticationForm(AuthenticationForm):
         ] = "p-1 mb-2 bg-gray-200/75 rounded-lg w-full"
 
 
-class FacilityCreationForm(UserCreationForm):
-    class Meta(UserCreationForm):
+class FacilityCreationForm(forms.ModelForm):
+    class Meta(forms.ModelForm):
         model = Facility
-        fields = ("kind", "name", "address", "pincode", "phone", "ward")
+        fields = ("kind", "name", "address", "pincode", "phone", "ward", "deleted")
 
 # class AddPatientForm(UserCreationForm):
 #     class Meta(UserCreationForm):

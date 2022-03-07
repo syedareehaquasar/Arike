@@ -1,0 +1,17 @@
+{% extends "pannel.html" %}
+
+{% block right %}
+<div class="flex flex-col w-full md:space-y-4">
+{% for f in facility %}
+<li>{{f.kind}}</li>
+<li>{{f.name}}</li>
+<li>{{f.address}}</li>
+<li>{{f.pincode}}</li>
+<li>{{f.phone}}</li>
+<li>{{f.ward}}</li>
+<li>{{f.deleted}}</li>
+{% empty %}
+    <li>No Facilities yet.</li>
+{% endfor %}
+</div>
+{% endblock right %}
