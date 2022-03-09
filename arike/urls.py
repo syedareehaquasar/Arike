@@ -29,5 +29,5 @@ urlpatterns = [
     path("facility/", ListFacilities.as_view()),
     path("patient/add/", addPatientView.as_view()),
     path("patient/", ListPatients.as_view()),
-    path("", Dashboard.as_view()),
+    path("", UserLoginView.as_view()),
 ]
