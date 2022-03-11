@@ -81,7 +81,7 @@ class ListPatients(ListView):
 class addFamilyDetails(CreateView):
     model = Family_Detail
     form_class = AddFamilyDetailsForm
-    template_name = "patient/addfamilyDetails.html"
+    template_name = "patient/addFamilyDetails.html"
     success_url = "/dashboard"
 
 class familyUpdateView(UpdateView):
