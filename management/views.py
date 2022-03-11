@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView
 from django.views.generic import ListView, TemplateView
+from django.http import HttpResponseRedirect
 
 from .forms import *
 from management.models import *
@@ -30,6 +31,17 @@ class facilityCreationView(CreateView):
     template_name = "facility/add.html"
     success_url = "/facility/"
 
+class facilityUpdateView(UpdateView):
+    model = Facility
+    form_class = FacilityCreationForm
+    template_name = "update.html"
+    success_url = "/facility/"
+
+class facilityDeleteView(DeleteView):
+    model = Facility
+    template_name = "delete.html"
+    success_url = "/facility/"
+
 class ListFacilities(ListView):
     queryset = Facility.objects.filter(deleted=False)
     template_name = "facility/list.html"
@@ -46,6 +58,17 @@ class addPatientView(CreateView):
     template_name = "patient/add.html"
     success_url = "/patient/"
 
+class patientUpdateView(UpdateView):
+    model = Patient
+    form_class = AddPatientForm
+    template_name = "update.html"
+    success_url = "/patient/"
+
+class patientDeleteView(DeleteView):
+    model = Patient
+    template_name = "delete.html"
+    success_url = "/patient/"
+
 class ListPatients(ListView):
     queryset = Patient.objects.filter(deleted=False)
     template_name = "patient/list.html"
@@ -56,7 +79,35 @@ class ListPatients(ListView):
         return Patient.objects.filter(deleted=False)
 
 class addFamilyDetails(CreateView):
-    pass
+    model = Family_Detail
+    form_class = AddFamilyDetailsForm
+    template_name = "patient/addfamilyDetails.html"
+    success_url = "/dashboard"
 
-class addPatientDisease(CreateView):
-    pass
+class familyUpdateView(UpdateView):
+    model = Family_Detail
+    form_class = AddFamilyDetailsForm
+    template_name = "update.html"
+    success_url = "/dashboard/"
+
+class familyDeleteView(DeleteView):
+    model = Family_Detail
+    template_name = "delete.html"
+    success_url = "/dashboard/"
+
+class addTreatmentDetails(CreateView):
+    model = Treatment
+    form_class = addTreatment
+    template_name = "patient/addTreatment.html"
+    success_url = "/dashboard"
+
+class treatmentUpdateView(UpdateView):
+    model = Treatment
+    form_class = addTreatment
+    template_name = "update.html"
+    success_url = "/dashboard/"
+
+class treatmentDeleteView(DeleteView):
+    model = Treatment
+    template_name = "delete.html"
+    success_url = "/dashboard/"

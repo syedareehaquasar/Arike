@@ -1,6 +1,7 @@
 {% extends "base.html" %} {% block content %}
-<div class="flex items-start justify-between h-full">
-    <div class="hidden lg:block shadow-lg relative w-80 h-screen">
+<div class="flex flex-row">
+<div>
+    <div class="hidden lg:block shadow-lg relative w-80 h-screen justify-left">
         <div class="bg-white h-full dark:bg-gray-700">
             <div class="flex items-center justify-start pt-6 ml-8">
                 <p class="font-bold dark:text-white text-xl">
@@ -9,7 +10,7 @@
             </div>
             <nav class="mt-6">
                 <div>
-                    <a class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start border-l-4 border-purple-500"
+                    <a class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500"
                         href="/dashboard/">
                         <span class="text-left">
                             <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792"
@@ -23,7 +24,7 @@
                             Dashboard
                         </span>
                     </a>
-                    <a class="w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent"
+                    <a class="hover:border-l-4 hover:border-purple-500 w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent"
                         href="/facility/">
                         <span class="text-left">
                             <svg width="20" height="20" fill="currentColor" viewBox="0 0 2048 1792"
@@ -40,7 +41,7 @@
                             </span>
                         </span>
                     </a>
-                    <a class="w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent"
+                    <a class="hover:border-l-4 hover:border-purple-500 w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent"
                         href="/patient/">
                         <span class="text-left">
                             <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792"
@@ -54,8 +55,8 @@
                             Patient
                         </span>
                     </a>
-                    <a class="w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent"
-                        href="#">
+                    <a class="hover:border-l-4 hover:border-purple-500 w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent"
+                        href="/treatment/">
                         <span class="text-left">
                             <svg width="20" height="20" fill="currentColor" viewBox="0 0 2048 1792"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -68,8 +69,8 @@
                             Treatment Details
                         </span>
                     </a>
-                    <a class="w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent"
-                        href="#">
+                    <a class=" hover:border-l-4 hover:border-purple-500w-full text-gray-400 flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 border-l-4 border-transparent"
+                        href="/family/">
                         <span class="text-left">
                             <svg width="20" height="20" fill="currentColor" viewBox="0 0 2048 1792"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -86,7 +87,10 @@
             </nav>
         </div>
     </div>
-    {% block section %} {% endblock section %}
-    {% block right %} {% endblock right %}
 </div>
+    <div class="grow justify-center flex">
+        {% block section %} {% endblock section %}
+        {% block right %} {% endblock right %}
+    </div>
+    </div>
 {% endblock content %}

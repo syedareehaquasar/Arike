@@ -1,24 +1,14 @@
-{% extends "pannel.html" %}
+{% extends "../form.html" %}
 
-{% block right %}
-<div class="flex flex-col w-full md:space-y-4">
+{% block action %}
 <form action="/patient/add/" method="post">
-    <div class="flex justify-center flex-col w-full text-base">
-        {% for field in form %}
-        <div class="fieldWrapper">
-            {{ field.label_tag }}
-            {{ field }}
-            <span class="form-error">{{ field.errors.as_text }}</span>
-        </div>
-        {% endfor %}
-        {% csrf_token %}
-        <a href="/patient/add/">
-            <button
-                class="bg-purple-500 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-md font-base text-center mt-8 w-full">
-                Create
-            </button>
-        </a>
-    </div>
-</form>
-</div>
-{% endblock right %}
+    {% endblock action %}
+
+    {% block submit %}
+    <a href="/patient/add/">
+        <button
+            class="bg-purple-500 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-md font-base text-center mt-8 w-full">
+            Create
+        </button>
+    </a>
+    {% endblock submit %}

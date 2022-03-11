@@ -1,0 +1,16 @@
+{% extends "../form.html" %}
+
+{% block action %}
+<form action="/family/" method="post">
+    {% endblock action %}
+
+    {% block submit %}
+    <a href="/patient/add/">
+        <a href="/family/">
+            <button
+                class="bg-purple-500 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-md font-base text-center mt-8 w-full">
+                Create
+            </button>
+        </a>
+    </a>
+    {% endblock submit %}

@@ -25,9 +25,24 @@ urlpatterns = [
     path("user/login/", UserLoginView.as_view()),
     path("dashboard/", Dashboard.as_view()),
     path("user/logout/", LogoutView.as_view()),
+
     path('facility/add/', facilityCreationView.as_view()),
     path("facility/", ListFacilities.as_view()),
+    path("facility/update/<pk>/", facilityUpdateView.as_view()),
+    path("facility/delete/<pk>/", facilityDeleteView.as_view()),
+
     path("patient/add/", addPatientView.as_view()),
+    path("patient/update/<pk>/", patientUpdateView.as_view()),
     path("patient/", ListPatients.as_view()),
+    path("patient/delete/<pk>/", patientDeleteView.as_view()),
+
+    path("family/add/", addFamilyDetails.as_view()),
+    path("family/", addFamilyDetails.as_view()),
+    path("family/delete/<pk>/", familyDeleteView.as_view()),
+
+    path("treatment/add/", addTreatmentDetails.as_view()),
+    path("treatment/", addTreatmentDetails.as_view()),
+    path("treatment/delete/<pk>/", treatmentDeleteView.as_view()),
+    
     path("", UserLoginView.as_view()),
 ]

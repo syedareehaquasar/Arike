@@ -1,8 +1,8 @@
-{% extends "pannel.html" %}
+{% extends "../pannel.html" %}
 {% block right %}
 {% for p in patient %}
 <div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative rounded-lg m-4">
-    <li class="list-none">
+    <li class="list-none flex justify-between flex-col">
         <div class="flex flex-wrap flex-row justify-between">
             <div>
                 <div class="font-semibold text-lg text-purple-200">{{p.full_name}}</div>
@@ -21,6 +21,17 @@
             <li>Ward: {{p.ward}}</li>
             <li>Facility: {{p.facility}}</li>
         </ul>
+        <div class="relative bottom-0">
+            <a href="/patient/update/{{ f.id }}">
+                <button
+                    class="bg-purple-500 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-md font-base text-center mt-8 w-full">Update</button>
+            </a>
+            <br>
+            <a href="/patient/delete/{{ f.id }}">
+                <button
+                    class="bg-purple-500 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-md font-base text-center mt-8 w-full">Delete</button>
+            </a>
+        </div>
     </li>
 </div>
 {% empty %}
@@ -28,10 +39,11 @@
 {% endfor %}
 {% endblock right %}
 {% block section %}
-<div class="shadow-lg px-4 py-6 w-200 bg-white dark:bg-gray-700 relative rounded-lg m-4">
-<h1 class="text-6xl">Patient</h1>
-<br>
-<a href="/patient/add/">
-    <span class="px-2 h-5 text-2xl font-semibold rounded-full bg-purple-100 text-green-800">Add</span>
-</a>
-</div>{% endblock section %}
+<div class="shadow-lg px-4 py-6 w-200 bg-white dark:bg-gray-700 relative rounded-lg m-4 justify-center">
+    <h1 class="text-6xl">Patient</h1>
+    <br>
+    <a href="/patient/add/">
+        <button class="bg-green-100 hover:bg-green-300 text-purple-900 font-medium py-2 px-4 rounded-md font-base text-center mt-8 w-full">Add</button>
+    </a>
+</div>
+{% endblock section %}

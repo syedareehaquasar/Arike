@@ -1,0 +1,14 @@
+{% extends "pannel.html" %}
+
+{% block right %}
+<div class="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-700 relative rounded-lg m-4 flex-wrap">
+    <li class="list-none">
+        {% block list %} {% endblock list %}
+    </li>
+</div>
+{% endblock right %}
+
+{% block section %}
+<div class="shadow-lg px-4 py-6 w-200 bg-white dark:bg-gray-700 relative rounded-lg m-4">
+    {% block tag %} {% endblock tag %}
+</div>{% endblock section %}
