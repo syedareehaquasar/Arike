@@ -29,6 +29,16 @@ class MyUserCreationForm(UserCreationForm):
         fields = ("phone", "is_verified", "role", "facility", "district", "user")
 
 
+class UserProfileForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs["class"] = "p-1 mb-2 bg-gray-200/75 rounded-lg w-full"
+            
+    class Meta:
+        model = UserProfile
+        fields = ("password", "phone", "is_verified", "role", "facility", "district")
+        
 class MyUserChangeForm(UserChangeForm):
 
     class Meta(UserChangeForm):

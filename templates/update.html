@@ -1,14 +1,14 @@
-{% extends "form.html" %}
+{% extends "pannel.html" %}
 
-{% block action %}
-<form action="" method="post">
-    {% endblock action %}
-
-    {% block submit %}
-    <a href="/facility/">
-        <button type="submit"
-            class="bg-purple-500 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-md font-base text-center mt-8 w-full">
-            Update
-        </button>
-    </a>
-    {% endblock submit %}
+{% block right %}
+<div class="flex flex-col w-full flex-wrap">
+    <div class="px-10 py-5 m-5">
+        <h1 class="text-3xl text-gray-100 mb-6">Hi {{request.user}}!</h1>
+        <form method="post">
+            {% csrf_token %} 
+            {{form|crispy}}
+            <button class="mt-2 p-2 w-full bg-purple-500 text-gray-100 text-md font-semibold rounded-lg" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock right %}

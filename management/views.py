@@ -1,48 +1,42 @@
+from datetime import date
 from django.shortcuts import render
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.views import LoginView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import ListView, TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 
-from .forms import *
+from management.forms import *
 from management.models import *
+
 
 class UserCreateView(CreateView):
     model = UserProfile
     form_class = MyUserCreationForm
     template_name = "user/signup.html"
-    success_url = "/login"
+    success_url = "/login/"
+
+
 class UserLoginView(LoginView):
     form_class = CustomAuthenticationForm
     template_name = "user/login.html"
+    success_url = "/dashboard/"
 
-# forms for each (4)
-# update view later
 
-class Dashboard(TemplateView):
+class Dashboard(LoginRequiredMixin, TemplateView):
     template_name = "dashboard.html"
 
-class Pannel(TemplateView):
-    template_name = "pannel.html"
 
-class facilityCreationView(CreateView):
-    model = Facility
-    form_class = FacilityCreationForm
-    template_name = "facility/add.html"
-    success_url = "/facility/"
-
-class facilityUpdateView(UpdateView):
-    model = Facility
-    form_class = FacilityCreationForm
+class UserUpdateView(UpdateView):
+    model = UserProfile
+    form_class = UserProfileForm
     template_name = "update.html"
-    success_url = "/facility/"
+    success_url = "/dashboard"
 
-class facilityDeleteView(DeleteView):
-    model = Facility
-    template_name = "delete.html"
-    success_url = "/facility/"
 
-class ListFacilities(ListView):
+class FacilityListView(ListView):
     queryset = Facility.objects.filter(deleted=False)
     template_name = "facility/list.html"
     context_object_name = "facility"
@@ -52,24 +46,32 @@ class ListFacilities(ListView):
         return Facility.objects.filter(deleted=False)
 
 
-class addPatientView(CreateView):
-    model = Patient
-    form_class = AddPatientForm
-    template_name = "patient/add.html"
-    success_url = "/patient/"
+class FacilityCreateView(CreateView):
+    model = Facility
+    form_class = FacilityCreationForm
+    template_name = "facility/add.html"
+    success_url = "/facility/"
 
-class patientUpdateView(UpdateView):
-    model = Patient
-    form_class = AddPatientForm
-    template_name = "update.html"
-    success_url = "/patient/"
 
-class patientDeleteView(DeleteView):
-    model = Patient
+class FacilityDeleteView(DeleteView):
+    model = Facility
     template_name = "delete.html"
-    success_url = "/patient/"
+    success_url = "/facility/"
 
-class ListPatients(ListView):
+
+class FacilityDetailView(DetailView):
+    model = Facility
+    template_name = "facility/detail.html"
+
+
+class FacilityUpdateView(UpdateView):
+    model = Facility
+    form_class = FacilityCreationForm
+    template_name = "facility/update.html"
+    success_url = "/dashboard/"
+
+
+class PatientListView(ListView):
     queryset = Patient.objects.filter(deleted=False)
     template_name = "patient/list.html"
     context_object_name = "patient"
@@ -78,36 +80,158 @@ class ListPatients(ListView):
     def get_queryset(self):
         return Patient.objects.filter(deleted=False)
 
-class addFamilyDetails(CreateView):
-    model = Family_Detail
-    form_class = AddFamilyDetailsForm
-    template_name = "patient/addFamilyDetails.html"
-    success_url = "/dashboard"
 
-class familyUpdateView(UpdateView):
-    model = Family_Detail
-    form_class = AddFamilyDetailsForm
-    template_name = "update.html"
-    success_url = "/dashboard/"
+class PatientCreateView(CreateView):
+    model = Patient
+    form_class = AddPatientForm
+    template_name = "patient/add.html"
+    success_url = "/patient"
 
-class familyDeleteView(DeleteView):
-    model = Family_Detail
+
+class PatientDeleteView(DeleteView):
+    model = Patient
     template_name = "delete.html"
-    success_url = "/dashboard/"
+    success_url = "/patient"
 
-class addTreatmentDetails(CreateView):
+
+class PatientUpdateView(UpdateView):
+    model = Patient
+    form_class = AddPatientForm
+    template_name = "patient/update.html"
+    success_url = "/patient"
+
+
+class TreatmentListView(ListView):
+    queryset = Treatment.objects.filter(deleted=False)
+    template_name = "patient/treatment.html"
+    context_object_name = "treatment"
+    paginate_by = 10
+
+    def get_queryset(self):
+        pid = self.request.GET.get("patient_id")
+        res = Treatment.objects.filter(deleted=False)
+        if pid:
+            res = res.filter(patient__id=pid)
+        return res
+
+
+class TreatmentCreateView(CreateView):
     model = Treatment
     form_class = addTreatment
     template_name = "patient/addTreatment.html"
-    success_url = "/dashboard"
+    success_url = "/treatment"
 
-class treatmentUpdateView(UpdateView):
-    model = Treatment
-    form_class = addTreatment
-    template_name = "update.html"
-    success_url = "/dashboard/"
 
-class treatmentDeleteView(DeleteView):
+class TreatmentDeleteView(DeleteView):
     model = Treatment
     template_name = "delete.html"
-    success_url = "/dashboard/"
+    success_url = "/treatment"
+
+
+class TreatmentUpdateView(UpdateView):
+    model = Treatment
+    form_class = addTreatment
+    template_name = "patient/treatmentUpdate.html"
+    success_url = "/treatment"
+
+
+class FamilyListView(ListView):
+    queryset = Family_Detail.objects.filter(deleted=False)
+    template_name = "patient/FamilyList.html"
+    context_object_name = "family"
+    paginate_by = 10
+
+    def get_queryset(self):
+        pid = self.request.GET.get("patient_id")
+        res = Family_Detail.objects.filter(deleted=False)
+        if pid:
+            res = res.filter(patient__id=pid)
+        return res
+
+
+class FamilyCreateView(CreateView):
+    model = Family_Detail
+    form_class = AddFamilyDetailsForm
+    template_name = "patient/addFamilyDetails.html"
+    success_url = "/family"
+
+
+class FamilyDeleteView(DeleteView):
+    model = Family_Detail
+    template_name = "delete.html"
+    success_url = "/family"
+
+
+class FamilyUpdateView(UpdateView):
+    model = Family_Detail
+    form_class = AddFamilyDetailsForm
+    template_name = "patient/familyUpdate.html"
+    success_url = "/family"
+
+
+class DiseaseListView(ListView):
+    queryset = Patient_Disease.objects.filter(deleted=False)
+    template_name = "disease/list.html"
+    context_object_name = "disease"
+    paginate_by = 10
+
+    def get_queryset(self):
+        pid = self.request.GET.get("patient_id")
+        res = Patient_Disease.objects.filter(deleted=False)
+        if pid:
+            res = res.filter(patient__id=pid)
+        return res
+
+
+class DiseaseCreateView(CreateView):
+    model = Patient_Disease
+    form_class = addDisease
+    template_name = "disease/create.html"
+    success_url = "/disease"
+
+
+class DiseaseDeleteView(DeleteView):
+    model = Patient_Disease
+    template_name = "delete.html"
+    success_url = "/disease"
+
+
+class DiseaseUpdateView(UpdateView):
+    model = Schedule_Visit
+    form_class = addDisease
+    template_name = "disease/update.html"
+    success_url = "/disease"
+
+
+class VisitListView(ListView):
+    queryset = Schedule_Visit.objects.filter(deleted=False)
+    template_name = "visits/list.html"
+    context_object_name = "visit"
+    paginate_by = 10
+
+    def get_queryset(self):
+        pid = self.request.GET.get("patient_id")
+        res = Schedule_Visit.objects.filter(deleted=False)
+        if pid:
+            res = res.filter(patient__id=pid)
+        return res
+
+
+class VisitCreateView(CreateView):
+    model = Schedule_Visit
+    form_class = addVisitDetails
+    template_name = "visits/create.html"
+    success_url = "/visit"
+
+
+class VisitDeleteView(DeleteView):
+    model = Schedule_Visit
+    template_name = "delete.html"
+    success_url = "/visit"
+
+
+class VisitUpdateView(UpdateView):
+    model = Schedule_Visit
+    form_class = addVisitDetails
+    template_name = "visits/update.html"
+    success_url = "/visit"
