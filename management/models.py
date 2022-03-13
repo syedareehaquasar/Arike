@@ -70,8 +70,12 @@ class UserProfile(TimeStampMixin):
         Facility, on_delete=models.CASCADE, blank=True, null=True)
     district = models.ForeignKey(
         District, on_delete=models.CASCADE, blank=True, null=True)
+    
+    USERNAME_FIELD = 'user.username'
+
     def __str__(self):
         return f"{self.user.username}"
+        
 class Patient(TimeStampMixin):
     GENDER_CHOICES = (
         ("male", "male"),
