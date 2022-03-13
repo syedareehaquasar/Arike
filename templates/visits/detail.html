@@ -1,0 +1,25 @@
+{% extends "../pannel.html" %}
+{% block right %}
+<div class="flex flex-col flex-wrap px-10 py-5 m-5 h-screen items-center justify-center">
+    <h1 class="text-3xl text-purple-500 mr-10 mb-4">Visit Details</h1>
+    <div class="flex flex-wrap">
+            <div class="shadow bg-gray-100 rounded-lg p-4 m-2 w-full">
+                <ul class="text-md text-gray-500 p-2">
+                    <li><b>Palliative Phase:</b> {{object.palliative_phase}}</li>
+                    <li><b>Blood Pressure:</b> {{object.blood_pressure}}</li>
+                    <li><b>Pulse:</b> {{object.pulse}}</li>
+                    <li><b>General Random Blood Sugar:</b> {{object.general_random_blood_sugar}}</li>
+                    <li><b>Personal Hygiene:</b> {{object.personal_hygiene}}</li>
+                    <li><b>Mouth Hygiene:</b> {{object.mouth_hygiene}}</li>
+                    <li><b>Public Hygiene:</b> {{object.pubic_hygiene}}</li>
+                    <li><b>Systematic Examination:</b> {{object.systemic_examination}}</li>
+                    <li><b>At Peace:</b> {{object.patient_at_peace}}</li>
+                    <li><b>Pain:</b> {{object.pain}}</li>
+                    <li><b>Symptoms:</b> {{object.symptoms}}</li>
+                    <li><b>Note:</b> {{object.note}}</li>
+                    <li><b>Schedule Visit:</b> {{object.Schedule_Visit}}</li>
+                </ul>
+            </div>
+    </div>
+</div>
+{% endblock right %}

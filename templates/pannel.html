@@ -15,11 +15,9 @@
                     <a href="/patient/"><li class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500"><i class="fi fi-rr-user mr-2 text-purple-500 p-2"></i>Patient</li></a>
                     <a href="/treatment/"><li class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500"><i class="fi fi-rr-treatment mr-2 text-purple-500 p-2"></i>Treatment Details</li></a>                    
                     <a href="/visit/"><li class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500"><i class="fi fi-rr-clock mr-2 text-purple-500 p-2"></i></i>Schedule Visits</li></a>
-                    {% if request.user == "admin" or request.user == "distadmin" or request.user.username == "admin" or request.user.username == "distadmin"%}
+                    <!-- {% if request.user == "admin" or request.user == "distadmin" or request.user.username == "admin" or request.user.username == "distadmin"%}
                     <a href="/user/create/"><li class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500"><i class="fi fi-rr-user-add mr-2 text-purple-500 p-2"></i>Create Nurses</li></a>
-                    {% endif %}
-                    <a href="/profile/{{request.user.id}}"><li class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500"><i class="fi fi-rr-portrait mr-2 text-purple-500 p-2"></i>Profile</li></a>
-                    <a href="/logout/"><li class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500"><i class="fi fi-rr-power mr-2 text-purple-500 p-2"></i>Log Out</li></a>
+                    {% endif %} -->
                 </ul>
             </nav>
         </div>

@@ -32,7 +32,7 @@ class Dashboard(LoginRequiredMixin, TemplateView):
 class UserUpdateView(UpdateView):
     model = UserProfile
     form_class = UserProfileForm
-    template_name = "update.html"
+    template_name = "user/update.html"
     success_url = "/dashboard"
 
 
@@ -40,7 +40,7 @@ class FacilityListView(ListView):
     queryset = Facility.objects.filter(deleted=False)
     template_name = "facility/list.html"
     context_object_name = "facility"
-    paginate_by = 10
+    paginate_by = 5
 
     def get_queryset(self):
         return Facility.objects.filter(deleted=False)
@@ -75,7 +75,7 @@ class PatientListView(ListView):
     queryset = Patient.objects.filter(deleted=False)
     template_name = "patient/list.html"
     context_object_name = "patient"
-    paginate_by = 10
+    paginate_by = 5
 
     def get_queryset(self):
         return Patient.objects.filter(deleted=False)
@@ -105,7 +105,7 @@ class TreatmentListView(ListView):
     queryset = Treatment.objects.filter(deleted=False)
     template_name = "patient/treatment.html"
     context_object_name = "treatment"
-    paginate_by = 10
+    paginate_by = 5
 
     def get_queryset(self):
         pid = self.request.GET.get("patient_id")
@@ -139,7 +139,7 @@ class FamilyListView(ListView):
     queryset = Family_Detail.objects.filter(deleted=False)
     template_name = "patient/FamilyList.html"
     context_object_name = "family"
-    paginate_by = 10
+    paginate_by = 5
 
     def get_queryset(self):
         pid = self.request.GET.get("patient_id")
@@ -173,7 +173,7 @@ class DiseaseListView(ListView):
     queryset = Patient_Disease.objects.filter(deleted=False)
     template_name = "disease/list.html"
     context_object_name = "disease"
-    paginate_by = 10
+    paginate_by = 5
 
     def get_queryset(self):
         pid = self.request.GET.get("patient_id")
@@ -207,7 +207,7 @@ class VisitListView(ListView):
     queryset = Schedule_Visit.objects.filter(deleted=False)
     template_name = "visits/list.html"
     context_object_name = "visit"
-    paginate_by = 10
+    paginate_by = 5
 
     def get_queryset(self):
         pid = self.request.GET.get("patient_id")
@@ -219,6 +219,16 @@ class VisitListView(ListView):
 
 class VisitCreateView(CreateView):
     model = Schedule_Visit
+    form_class = scheduleVisit
+    template_name = "visits/create.html"
+    success_url = "/visit"
+
+class VisitDetailsListView(DetailView):
+    model = Visit_Details
+    template_name = "visits/detail.html"
+
+class VisitDetailsCreateView(CreateView):
+    model = Visit_Details
     form_class = addVisitDetails
     template_name = "visits/create.html"
     success_url = "/visit"
@@ -232,6 +242,6 @@ class VisitDeleteView(DeleteView):
 
 class VisitUpdateView(UpdateView):
     model = Schedule_Visit
-    form_class = addVisitDetails
+    form_class = scheduleVisit
     template_name = "visits/update.html"
     success_url = "/visit"
