@@ -10,14 +10,43 @@
             <nav class="mt-6">
                 <!-- w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500 -->
                 <ul class="p-2 text-gray-500">
-                    <a href="/dashboard/"><li class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500"><i class="fi fi-rr-home mr-2 text-purple-500 p-2"></i>Home</li></a>
-                    <a href="/facility/"><li class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500"><i class="fi fi-rr-apps mr-2 text-purple-500 p-2"></i>Facility</li></a>
-                    <a href="/patient/"><li class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500"><i class="fi fi-rr-user mr-2 text-purple-500 p-2"></i>Patient</li></a>
-                    <a href="/treatment/"><li class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500"><i class="fi fi-rr-treatment mr-2 text-purple-500 p-2"></i>Treatment Details</li></a>                    
-                    <a href="/visit/"><li class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500"><i class="fi fi-rr-clock mr-2 text-purple-500 p-2"></i></i>Schedule Visits</li></a>
-                    <!-- {% if request.user == "admin" or request.user == "distadmin" or request.user.username == "admin" or request.user.username == "distadmin"%}
-                    <a href="/user/create/"><li class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500"><i class="fi fi-rr-user-add mr-2 text-purple-500 p-2"></i>Create Nurses</li></a>
-                    {% endif %} -->
+                    <a href="/dashboard/">
+                        <li
+                            class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500">
+                            <i class="fi fi-rr-home mr-2 text-purple-500 p-2"></i>Home</li>
+                    </a>
+                    <a href="/facility/">
+                        <li
+                            class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500">
+                            <i class="fi fi-rr-apps mr-2 text-purple-500 p-2"></i>Facility</li>
+                    </a>
+                    <a href="/patient/">
+                        <li
+                            class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500">
+                            <i class="fi fi-rr-user mr-2 text-purple-500 p-2"></i>Patient</li>
+                    </a>
+                    <a href="/treatment/">
+                        <li
+                            class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500">
+                            <i class="fi fi-rr-treatment mr-2 text-purple-500 p-2"></i>Treatment Details</li>
+                    </a>
+                    <a href="/visit/">
+                        <li
+                            class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500">
+                            <i class="fi fi-rr-clock mr-2 text-purple-500 p-2"></i></i>Schedule Visits</li>
+                    </a>
+                    {% if request.user == "admin" or request.user == "distadmin" or request.user.username == "admin" or request.user.username == "distadmin" %}
+                    <a href="/user/create/">
+                        <li
+                            class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500">
+                            <i class="fi fi-rr-user-add mr-2 text-purple-500 p-2"></i>Create Nurses</li>
+                    </a>
+                    <a href="/users/">
+                        <li
+                            class="w-full text-gray-800 dark:text-white flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:border-l-4 hover:border-purple-500">
+                            <i class="fi fi-rr-user-add mr-2 text-purple-500 p-2"></i>Nurses</li>
+                    </a>
+                    {% endif %}
                 </ul>
             </nav>
         </div>
