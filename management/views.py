@@ -18,6 +18,11 @@ class UserCreateView(CreateView):
     template_name = "user/signup.html"
     success_url = "/login/"
 
+class UserCView(CreateView):
+    model = User
+    template_name = "user/signup.html"
+    success_url = "/login/"
+
 
 class UserLoginView(LoginView):
     form_class = CustomAuthenticationForm
